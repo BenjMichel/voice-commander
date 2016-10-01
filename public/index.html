@@ -6,20 +6,30 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
     <script>
-      // annyang.setLanguage('fr-FR');
       (function () {
         function recognized(text) {
           var rec = document.getElementById('conversation');
           rec.innerHTML += '<div class="recognized"><div>' + text + '</div></div>';
         }
 
+        function sendPlayPause() {
+          var formData = new FormData();
+          formData.append("action", "play_pause");
+
+          var request = new XMLHttpRequest();
+          request.open("POST", "http://192.168.1.91/spotcommander/main.php");
+          request.send(formData);
+        }
+
         if (annyang) {
           var commands = {
             'stop': function () {
-              recognized('stop ');
+              recognized('Stop');
+              sendPlayPause();
             },
             'play': function () {
-              recognized('play');
+              recognized('Play');
+              sendPlayPause();
             },
             ':nomatch': function (message) {
               recognized(message);
