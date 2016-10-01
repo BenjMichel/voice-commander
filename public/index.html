@@ -12,12 +12,15 @@
           rec.innerHTML += '<div class="recognized"><div>' + text + '</div></div>';
         }
 
-        function sendPlayPause() {
+        function sendAction(action, data) {
           var formData = new FormData();
-          formData.append("action", "play_pause");
+          formData.append('action', action);
+          if (data) {
+            formData.append('data', data);
+          }
 
           var request = new XMLHttpRequest();
-          request.open("POST", "http://192.168.1.91/spotcommander/main.php");
+          request.open('POST', 'http://192.168.1.91/spotcommander/main.php');
           request.send(formData);
         }
 
@@ -25,14 +28,30 @@
           var commands = {
             'stop': function () {
               recognized('Stop');
-              sendPlayPause();
+              sendAction('play_pause');
             },
             'play': function () {
               recognized('Play');
-              sendPlayPause();
+              sendAction('play_pause');
+            },
+            'next': function () {
+              recognized('Next song');
+              sendAction('next');
+            },
+            'previous': function () {
+              recognized('Previous song');
+              sendAction('previous');
+            },
+            'loud': function () {
+              recognized('Volume up');
+              sendAction('adjust_spotify_volume', 'up');
+            },
+            'down': function () {
+              recognized('Volume down');
+              sendAction('adjust_spotify_volume', 'down');
             },
             ':nomatch': function (message) {
-              recognized(message);
+              recognized(`${message} not recognized`);
             }
           };
 
