@@ -1,0 +1,19 @@
+{
+  "name": "voice-commander",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenjMichel/voice-commander.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenjMichel/voice-commander/issues"
+  },
+  "homepage": "https://github.com/BenjMichel/voice-commander#readme"
+}
