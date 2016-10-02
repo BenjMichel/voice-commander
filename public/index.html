@@ -7,6 +7,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
     <script>
       (function () {
+        const IP_SPOT_DEAMON = 'http://192.168.1.91/spotcommander';
+
         function recognized(text) {
           var rec = document.getElementById('conversation');
           rec.innerHTML += '<div class="recognized"><div>' + text + '</div></div>';
@@ -20,8 +22,17 @@
           }
 
           var request = new XMLHttpRequest();
-          request.open('POST', 'http://192.168.1.91/spotcommander/main.php');
+          request.open('POST', `${IP_SPOT_DEAMON}/main.php`);
           request.send(formData);
+        }
+
+        function updateNowPlaying(nowPlayingResponse) {
+          var rec = document.getElementById('title');
+          rec.innerHTML = `${nowPlayingResponse.title} by ${nowPlayingResponse.artist}`;
+          var vol = document.getElementById('volume');
+          vol.innerHTML = nowPlayingResponse.current_volume;
+          var cover = document.getElementById('cover');
+          cover.src = nowPlayingResponse.cover_art;
         }
 
         if (annyang) {
@@ -59,13 +70,35 @@
           annyang.start();
         }
 
-        annyang.addCallback('error', function () {
-          console.log('error');
+        annyang.addCallback('error', function (err) {
+          console.log('error', err);
+          location.reload();
         });
+        setTimeout(function(){ location.reload(); }, 60000);
+
+
+        function nowPlaying() {
+          var request = new XMLHttpRequest();
+          request.onload = function() {
+            console.log(JSON.parse(this.responseText));
+            updateNowPlaying(JSON.parse(this.responseText));
+          };
+          request.open('POST', `${IP_SPOT_DEAMON}/nowplaying.php`);
+          request.send();
+          setTimeout(nowPlaying, 2000);
+        }
+
+        setTimeout(nowPlaying, 1000);
+
       })();
     </script>
   </head>
   <body>
+    <h3>Now playing:</h3>
+    <p id="title"></p>
+    <img id="cover" src="" width=200 height=200></img>
+    <p id="volume"></p>
+    <h3>Commands:</h3>
     <div id="conversation"></div>
   </body>
 </html>
