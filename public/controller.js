@@ -3,7 +3,7 @@ const IP_SPOT_DEAMON = 'http://192.168.1.91/spotcommander';
 let currentSong = null;
 
 function recognized(text) {
-  var rec = document.getElementById('conversation');
+  const rec = document.getElementById('conversation');
   rec.innerHTML += '<div class="recognized"><div>' + text + '</div></div>';
 }
 
@@ -30,13 +30,14 @@ function updateNowPlaying(nowPlayingResponse) {
 
 function like() {
   if (currentSong.actions.filter(action => action.action[0] === 'Remove from Library').length) {
-    recognized('Already liked')
-    return console.log('Already liked');
+    recognized('Already liked');
+    return;
   }
   const request = new XMLHttpRequest();
   request.onload = function() {
     if (this.responseText === 'Track saved to library') {
       recognized('Track saved to library');
+      responsiveVoice.speak('Track saved');
     } else {
       recognized('Error: ' + this.responseText);
     }
@@ -54,7 +55,6 @@ function nowPlaying() {
   const request = new XMLHttpRequest();
   request.onload = function() {
     currentSong = JSON.parse(this.responseText);
-    console.log(currentSong);
     updateNowPlaying(currentSong);
   };
   request.open('POST', `${IP_SPOT_DEAMON}/nowplaying.php`);
