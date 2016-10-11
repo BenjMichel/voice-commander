@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/BenjMichel/voice-commander#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "google-auth-library": "^0.9.8",
+    "googleapis": "^14.0.0",
+    "helmet": "^2.3.0"
   }
 }

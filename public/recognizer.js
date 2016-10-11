@@ -1,5 +1,5 @@
 const commands = {
-  'stop': function () {
+  'pause': function () {
     recognized('Stop');
     sendAction('play_pause');
   },
@@ -41,6 +41,6 @@ annyang.start();
 
 annyang.addCallback('error', function (err) {
   console.log('error', err);
-  // location.reload();
+  location.reload();
 });
-// setTimeout(function() { location.reload(); }, 60000);
+setTimeout(function() { location.reload(); }, 60000);

@@ -1,4 +1,4 @@
-const IP_SPOT_DEAMON = 'http://192.168.1.91/spotcommander';
+const IP_SPOT_DEAMON = 'http://192.168.0.15/spotcommander';
 
 let currentSong = null;
 

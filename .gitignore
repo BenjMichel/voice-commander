@@ -6,6 +6,7 @@ build
 logs
 *.log
 npm-debug.log*
+yarn.lock
 
 # Runtime data
 pids
@@ -16,3 +17,6 @@ pids
 # Dependency directories
 node_modules
 .npm
+
+# Project
+client_secret.json
